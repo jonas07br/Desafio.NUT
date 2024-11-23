@@ -1,0 +1,13 @@
+<div class="container">
+  <div>
+    <h1>Cpu</h1>
+    <p [ngClass]="cpuStatus">Usage: {{ metricsCPU.value }}%</p>
+  </div>
+  <div>
+    <h1>Memory</h1>
+    <p [ngClass]="memoryStatus">Usage: {{ metricsMemory.value }}%</p>
+  </div>
+  <div>
+    <h1>Latency</h1>
+    <p [ngClass]="latencyStatus">Usage: {{ metricsLatency.value }} ms</p>
+</div>
