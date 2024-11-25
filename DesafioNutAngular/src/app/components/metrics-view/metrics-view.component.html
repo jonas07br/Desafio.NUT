@@ -1,13 +1,30 @@
-<div class="container">
+<!-- <div class="container">
   <div>
     <h1>Cpu</h1>
-    <p [ngClass]="cpuStatus">Usage: {{ metricsCPU.value }}%</p>
+    <p [ngClass]="cpuStatus">Usage: {{ metricsCPU }}%</p>
   </div>
   <div>
     <h1>Memory</h1>
-    <p [ngClass]="memoryStatus">Usage: {{ metricsMemory.value }}%</p>
+    <p [ngClass]="memoryStatus">Usage: {{ metricsMemory }}%</p>
   </div>
   <div>
     <h1>Latency</h1>
-    <p [ngClass]="latencyStatus">Usage: {{ metricsLatency.value }} ms</p>
+    <p [ngClass]="latencyStatus">Usage: {{ metricsLatency }} ms</p>
+</div> -->
+
+<div class="dashboard">
+  <div class="metric-card" [class.danger]="cpuStatus === 'danger'">
+    <h3>CPU Usage</h3>
+    <p>{{ metricsCPU ?? 'Loading...' }}%</p>
+  </div>
+
+  <div class="metric-card" [class.danger]="memoryStatus === 'danger'">
+    <h3>Memory Usage</h3>
+    <p>{{ metricsMemory ?? 'Loading...' }}%</p>
+  </div>
+
+  <div class="metric-card" [class.danger]="latencyStatus === 'danger'">
+    <h3>Latency</h3>
+    <p>{{ metricsLatency ?? 'Loading...' }}ms</p>
+  </div>
 </div>

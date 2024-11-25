@@ -1,8 +1,15 @@
-<div>
+<!-- <div>
 
-  <app-metrics-view
+  <app-metrics-view *ngIf="metricsCPU && metricsMemory && metricsLatency"
   [metricsCPU]="metricsCPU"
   [metricsMemory]="metricsMemory"
   [metricsLatency]="metricsLatency"
   ></app-metrics-view>
-</div>
+
+  <input type="text" [(ngModel)]="login" placeholder="login">
+  <input type="password" [(ngModel)]="password" placeholder="password">
+  <button (click)="generateToken()">Login</button>
+  <button (click)="connect()">Get Metrics</button>
+</div> -->
+<router-outlet></router-outlet>
+
