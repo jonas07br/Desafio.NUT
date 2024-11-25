@@ -20,7 +20,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry){
         registry.addEndpoint("/metrics-websocket")
-            .setAllowedOrigins("http://localhost:4200")
+        .addInterceptors(new JwtInterceptor())
+            .setAllowedOriginPatterns("http://localhost:4200")
             .withSockJS();
     }
 }
