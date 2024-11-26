@@ -19,36 +19,52 @@ public class LoginService {
     @Autowired
     JWTConfig jwtConfig;
 
-    public Section createToken(User user){
-        if("admin".equals(user.getLogin()) || "admin".equals(user.getPassword())){
-            Section section = new Section();
-            section.setLogin(user.getLogin());
+    // public Section createToken(User user){
+    //     if("admin".equals(user.getLogin()) || "admin".equals(user.getPassword())){
+    //         Section section = new Section();
+    //         section.setLogin(user.getLogin());
     
-            JWTObject jwtObject = new JWTObject();
-            jwtObject.setSubject(user.getLogin());  
-            jwtObject.setIssuedAt(new Date(System.currentTimeMillis()));
-            jwtObject.setExpiration(new Date(System.currentTimeMillis() + jwtConfig.EXPIRATION));
-            jwtObject.setRoles("MANAGERS");
+    //         JWTObject jwtObject = new JWTObject();
+    //         jwtObject.setSubject(user.getLogin());  
+    //         jwtObject.setIssuedAt(new Date(System.currentTimeMillis()));
+    //         jwtObject.setExpiration(new Date(System.currentTimeMillis() + jwtConfig.EXPIRATION));
+    //         jwtObject.setRoles("MANAGERS");
             
-            String token = JWTCreator.create(jwtConfig.PREFIX,jwtConfig.KEY,jwtObject);
-            section.setToken(token);
+    //         String token = JWTCreator.create(jwtConfig.PREFIX,jwtConfig.KEY,jwtObject);
+    //         section.setToken(token);
     
-            return section;
-        }
-        else{
-            Section section = new Section();
-            section.setLogin(user.getLogin());
+    //         return section;
+    //     }
+    //     else{
+    //         Section section = new Section();
+    //         section.setLogin(user.getLogin());
     
-            JWTObject jwtObject = new JWTObject();
-            jwtObject.setSubject(user.getLogin());  
-            jwtObject.setIssuedAt(new Date(System.currentTimeMillis()));
-            jwtObject.setExpiration(new Date(System.currentTimeMillis() + jwtConfig.EXPIRATION));
-            jwtObject.setRoles("USERS");
+    //         JWTObject jwtObject = new JWTObject();
+    //         jwtObject.setSubject(user.getLogin());  
+    //         jwtObject.setIssuedAt(new Date(System.currentTimeMillis()));
+    //         jwtObject.setExpiration(new Date(System.currentTimeMillis() + jwtConfig.EXPIRATION));
+    //         jwtObject.setRoles("USERS");
             
-            String token = JWTCreator.create(jwtConfig.PREFIX,jwtConfig.KEY,jwtObject);
-            section.setToken(token);
+    //         String token = JWTCreator.create(jwtConfig.PREFIX,jwtConfig.KEY,jwtObject);
+    //         section.setToken(token);
     
-            return section;
-        }
+    //         return section;
+    //     }
+    // }
+    public Section generateToken(String user,String[] roles){
+        Section section = new Section();
+        section.setLogin(user);
+
+        JWTObject jwtObject = new JWTObject();
+        jwtObject.setSubject(user);  
+        jwtObject.setIssuedAt(new Date(System.currentTimeMillis()));
+        jwtObject.setExpiration(new Date(System.currentTimeMillis() + jwtConfig.EXPIRATION));
+        jwtObject.setRoles(roles);
+        
+        String token = JWTCreator.create(jwtConfig.PREFIX,jwtConfig.KEY,jwtObject);
+        section.setToken(token);
+
+        return section;
     }
+
 }
