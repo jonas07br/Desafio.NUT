@@ -19,19 +19,23 @@ public class MetricsController {
     @Scheduled(fixedRateString = "${metric.cpu.rate}")
     public void sendCPUMetric(){
         simpMessagingTemplate.convertAndSend("/topic/metrics", metricService.createCPUMetric());
-        System.out.println("CPU Metric sent");
+        // System.out.println("CPU Metric sent");
     }
 
     @Scheduled(fixedRateString = "${metric.memory.rate}")
     public void sendMemoryMetric(){
         simpMessagingTemplate.convertAndSend("/topic/metrics", metricService.createMemoryMetric());
-        System.out.println("Memory Metric sent");
+        // System.out.println("Memory Metric sent");
     }
 
     @Scheduled(fixedRateString = "${metric.latency.rate}")
     public void sendLatencyMetric(){
         simpMessagingTemplate.convertAndSend("/topic/metrics", metricService.createLatencyMetric());
-        System.out.println("Latency Metric sent");
+        // System.out.println("Latency Metric sent");
+    }
+    @Scheduled(fixedDelayString = "${metric.status.rate}")
+    public void sendStatusMsg(){
+        System.out.println("Schedule running");
     }
 
 }
