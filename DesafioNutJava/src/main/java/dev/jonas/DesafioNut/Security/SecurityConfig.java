@@ -43,7 +43,13 @@ public class SecurityConfig {
             .roles("MANAGERS")
             .build();
 
-        return new InMemoryUserDetailsManager(user);
+        UserDetails user2 = User.builder()
+            .username("user")
+            .password(encoder().encode("user"))
+            .roles("USERS")
+            .build();
+        
+        return new InMemoryUserDetailsManager(user,user2);
     }
 
     @Bean
@@ -80,13 +86,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         // http.headers().frameOptions().disable();
         http.cors().and().csrf().disable()
-            .addFilterAfter(new JWTFilter(), UsernamePasswordAuthenticationFilter.class)
+            // .addFilterAfter(new JWTFilter(), UsernamePasswordAuthenticationFilter.class)
             .authorizeRequests()
             .requestMatchers("/").permitAll()
-            .requestMatchers(HttpMethod.POST,"/login").permitAll()
+            .requestMatchers(HttpMethod.POST,"/login").hasAnyRole("USERS","MANAGERS")
             .requestMatchers("/teste").hasAnyRole("MANAGERS")
             .requestMatchers("/metrics-websocket/**").permitAll()
-            .anyRequest().authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            .anyRequest().authenticated().and().httpBasic(Customizer.withDefaults());
+            // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         return http.build();
     }
 }
