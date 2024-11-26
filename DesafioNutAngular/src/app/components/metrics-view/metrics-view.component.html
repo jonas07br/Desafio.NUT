@@ -1,30 +1,25 @@
-<!-- <div class="container">
-  <div>
-    <h1>Cpu</h1>
-    <p [ngClass]="cpuStatus">Usage: {{ metricsCPU }}%</p>
-  </div>
-  <div>
-    <h1>Memory</h1>
-    <p [ngClass]="memoryStatus">Usage: {{ metricsMemory }}%</p>
-  </div>
-  <div>
-    <h1>Latency</h1>
-    <p [ngClass]="latencyStatus">Usage: {{ metricsLatency }} ms</p>
-</div> -->
+<app-nav-bar></app-nav-bar>
 
-<div class="dashboard">
-  <div class="metric-card" [class.danger]="cpuStatus === 'danger'">
-    <h3>CPU Usage</h3>
-    <p>{{ metricsCPU ?? 'Loading...' }}%</p>
+<div class="dashboard" *ngIf="tokenValid">
+  <div class="metrics-container">
+    <div class="metric-card" [class.danger]="cpuStatus === 'danger'">
+      <h3>CPU Usage</h3>
+      <p>{{ metricsCPU ?? 'Loading...' }}%</p>
+    </div>
+    <app-graphic [metrics]="metricsCPU"></app-graphic>
   </div>
-
-  <div class="metric-card" [class.danger]="memoryStatus === 'danger'">
-    <h3>Memory Usage</h3>
-    <p>{{ metricsMemory ?? 'Loading...' }}%</p>
+  <div class="metrics-container">
+    <div class="metric-card" [class.danger]="memoryStatus === 'danger'">
+      <h3>Memory Usage</h3>
+      <p>{{ metricsMemory ?? 'Loading...' }}%</p>
+    </div>
+    <app-graphic [metrics]="metricsMemory"></app-graphic>
   </div>
-
-  <div class="metric-card" [class.danger]="latencyStatus === 'danger'">
-    <h3>Latency</h3>
-    <p>{{ metricsLatency ?? 'Loading...' }}ms</p>
+  <div class="metrics-container">
+    <div class="metric-card" [class.danger]="latencyStatus === 'danger'">
+      <h3>Latency</h3>
+      <p>{{ metricsLatency ?? 'Loading...' }}ms</p>
+    </div>
+    <app-graphic [metrics]="metricsLatency"></app-graphic>
   </div>
 </div>

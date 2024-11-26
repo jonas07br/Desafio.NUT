@@ -1,16 +1,17 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { Stomp } from '@stomp/stompjs';
 import Chart, { registerables, ChartConfiguration } from 'chart.js/auto';
 import SockJS from 'sockjs-client';
+import { NavBarComponent } from "../nav-bar/nav-bar.component";
+import { GraphicComponent } from "../graphic/graphic.component";
 
-Chart.register(...registerables);
 @Component({
   selector: 'app-metrics-view',
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, NgIf, NavBarComponent, GraphicComponent],
   templateUrl: './metrics-view.component.html',
   styleUrl: './metrics-view.component.css'
 })
@@ -25,10 +26,11 @@ export class MetricsViewComponent implements OnInit {
   private token:string|null='';
   private socketCliente:any=null;
 
-   public metricsCPU: number=0;
-   public metricsMemory: number=0;
-   public metricsLatency: number=0;
+  public metricsCPU: number=0;
+  public metricsMemory: number=0;
+  public metricsLatency: number=0;
 
+  public tokenValid:boolean=false;
 
   ngOnInit(): void {
       console.log(localStorage.getItem('token'));
@@ -47,7 +49,7 @@ export class MetricsViewComponent implements OnInit {
         'auth-token': this.token
       }, (frame: string) => {
         this.socketCliente.subscribe('/topic/metrics', (message: { body: string; }) => {
-
+          this.tokenValid = true;
           //console.log('Message: ' + message.body);
           this.metrics = JSON.parse(message.body);
           if(this.metrics.name.includes("CPU")){
