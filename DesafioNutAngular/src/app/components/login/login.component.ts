@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -25,22 +25,31 @@ export class LoginComponent implements OnInit {
   public msg:string='';
 
   generateToken(){
-    this.getToken().subscribe(data => {
-      if(!data){
-        console.log('Invalid credentials!');
-        this.msg = 'Invalid credentials!';
-        return;
-      }
-      localStorage.setItem('token', data.token);
-      console.log(localStorage.getItem('token'));
 
-      this.router.navigate(['/', 'metrics']);
-    });
+      this.getToken().pipe(
+        catchError(error => {
+          console.log('Invalid credentials!');
+          this.msg = 'Invalid credentials!';
+          return of(null);
+        }
+      ))
+      .subscribe(data => {
+        localStorage.setItem('token', data.token);
+        console.log(localStorage.getItem('token'));
+
+        this.router.navigate(['/', 'metrics']);
+      });
+
+
+
   }
 
   getToken():Observable<any>{
-    console.log(this.login);
-    console.log(this.password);
-    return this.httpCliente.post(this.url, {login: this.login, password: this.password});
+
+    return this.httpCliente.get(this.url, {
+      headers: new HttpHeaders({
+        'Authorization': `Basic ${btoa(this.login + ':' + this.password)}`
+      })
+    });
   }
 }
