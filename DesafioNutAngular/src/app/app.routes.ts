@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './pages/login/login.component';
 import { MetricsViewComponent } from './components/metrics-view/metrics-view.component';
 
 export const routes: Routes = [
