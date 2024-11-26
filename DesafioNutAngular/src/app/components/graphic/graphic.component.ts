@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { ApexOptions } from 'apexcharts';
 import { ChartComponent, ApexChart, ApexAxisChartSeries, NgApexchartsModule, ApexYAxis ,ChartType} from 'ng-apexcharts';
+import { last } from 'rxjs';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries|any;
@@ -26,7 +27,6 @@ export class GraphicComponent implements OnChanges {
 
   constructor() {
     this.chartOptions = {
-
       series: [
         {
           name: "Métricas",
@@ -35,14 +35,9 @@ export class GraphicComponent implements OnChanges {
       ],
       chart:{
         type: "bar",
-        // height:0, // Altura padrão em pixels
+        height:150, // Altura padrão em pixels
         toolbar: {
           show: false
-        }
-      },
-      xaxis: {
-        labels: {
-          show: false // Oculta os rótulos no eixo X
         }
       }
     };
@@ -50,6 +45,7 @@ export class GraphicComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.metricsArray.push(this.metrics);
     this.metricsArray = this.metricsArray.slice(-10);
+
     if (this.chart) {
       this.chart.updateSeries([
         {
