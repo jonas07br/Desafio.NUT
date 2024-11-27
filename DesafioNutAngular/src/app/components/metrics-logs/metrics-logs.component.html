@@ -1,0 +1,7 @@
+<div class="card">
+
+  <h4>{{metricName}}</h4>
+  <p *ngIf="metricName!='Latency'">Usage:{{metricValue}}%</p>
+  <p *ngIf="metricName=='Latency'">Rate:{{metricValue}}ms</p>
+  <p>Time:{{date.getHours()}}:{{date.getMinutes()}}:{{date.getSeconds()}}</p>
+</div>

@@ -1,0 +1,15 @@
+.card{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 65px;
+  margin: 5px;
+  margin-top: 0px;
+  border: 1px solid none;
+  border-radius: 15px;
+  background:linear-gradient(135deg, #fb3a3a, #94180a); ;
+  color: white;
+
+}
