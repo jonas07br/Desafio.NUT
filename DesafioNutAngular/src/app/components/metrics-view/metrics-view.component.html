@@ -4,22 +4,36 @@
   <div class="metrics-container">
     <div class="metric-card" [class.danger]="cpuStatus === 'danger'">
       <h3>CPU Usage</h3>
-      <p>{{ metricsCPU ?? 'Loading...' }}%</p>
+      <p>{{ metricsCPU }}%</p>
     </div>
     <app-graphic [metrics]="metricsCPU"></app-graphic>
   </div>
   <div class="metrics-container">
     <div class="metric-card" [class.danger]="memoryStatus === 'danger'">
       <h3>Memory Usage</h3>
-      <p>{{ metricsMemory ?? 'Loading...' }}%</p>
+      <p>{{ metricsMemory }}%</p>
     </div>
     <app-graphic [metrics]="metricsMemory"></app-graphic>
   </div>
   <div class="metrics-container">
     <div class="metric-card" [class.danger]="latencyStatus === 'danger'">
       <h3>Latency</h3>
-      <p>{{ metricsLatency ?? 'Loading...' }}ms</p>
+      <p>{{ metricsLatency }}ms</p>
     </div>
     <app-graphic [metrics]="metricsLatency"></app-graphic>
+  </div>
+</div>
+<div class="logs-container" *ngIf="tokenValid">
+  <h3>CPU Alerts:</h3>
+  <div class="logs">
+    <app-metrics-logs *ngFor="let item of CPULogs" [metricName]="item.name"[metricValue]="item.value"></app-metrics-logs>
+  </div>
+  <h3>Memory Alerts:</h3>
+  <div class="logs">
+    <app-metrics-logs *ngFor="let item of MemoryLogs" [metricName]="item.name"[metricValue]="item.value"></app-metrics-logs>
+  </div>
+  <h3>Latency Alerts:</h3>
+  <div class="logs">
+    <app-metrics-logs *ngFor="let item of LatencyLogs" [metricName]="item.name"[metricValue]="item.value"></app-metrics-logs>
   </div>
 </div>
